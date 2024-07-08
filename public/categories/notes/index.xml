@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on RAMDOM THOUGHTS</title>
+    <link>http://localhost:1313/categories/notes/</link>
+    <description>Recent content in Notes on RAMDOM THOUGHTS</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 25 Sep 2023 10:48:57 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centos配置离线yum源</title>
+      <link>http://localhost:1313/posts/centos%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BFyum%E6%BA%90/</link>
+      <pubDate>Mon, 25 Sep 2023 10:48:57 +0800</pubDate>
+      <guid>http://localhost:1313/posts/centos%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BFyum%E6%BA%90/</guid>
+      <description>&lt;p&gt;我们在Llinux系统中安装插件一般都是使用yum来进行安装插件(也可以通过rpm包来安装但是我们现在用的最多的是yum安装)，yum安装可以联网安装和离线安装，离线安装就是不能连通外网的时候来进行安装插件&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>在服务器部署RSS服务</title>
+      <link>http://localhost:1313/posts/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2rss%E6%9C%8D%E5%8A%A1/</link>
+      <pubDate>Thu, 14 Sep 2023 21:05:37 +0800</pubDate>
+      <guid>http://localhost:1313/posts/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2rss%E6%9C%8D%E5%8A%A1/</guid>
+      <description>&lt;h3 id=&#34;步骤&#34;&gt;步骤:&lt;/h3&gt;&#xA;&lt;p&gt;系统为：Ubuntu 20.04&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装Docker Engine&lt;/li&gt;&#xA;&lt;li&gt;部署RSS服务&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>群晖添加第三方套件源提示无效位置的解决方法</title>
+      <link>http://localhost:1313/posts/%E7%BE%A4%E6%99%96%E6%B7%BB%E5%8A%A0%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6%E6%BA%90%E6%8F%90%E7%A4%BA%E6%97%A0%E6%95%88%E4%BD%8D%E7%BD%AE%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Thu, 14 Sep 2023 21:05:30 +0800</pubDate>
+      <guid>http://localhost:1313/posts/%E7%BE%A4%E6%99%96%E6%B7%BB%E5%8A%A0%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6%E6%BA%90%E6%8F%90%E7%A4%BA%E6%97%A0%E6%95%88%E4%BD%8D%E7%BD%AE%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid>
+      <description>&lt;h1 id=&#34;群晖添加第三方套件源提示无效位置的解决方法&#34;&gt;&lt;em&gt;&lt;strong&gt;*群晖添加第三方套件源提示无效位置的解决方法*&lt;/strong&gt;&lt;/em&gt;&lt;/h1&gt;</description>
+    </item>
+    <item>
+      <title>MySQL读写分离</title>
+      <link>http://localhost:1313/posts/mysql%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/</link>
+      <pubDate>Thu, 14 Sep 2023 21:02:55 +0800</pubDate>
+      <guid>http://localhost:1313/posts/mysql%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/</guid>
+      <description>MySQL基本教程 增加用户phpadmin并完成授权 创建数据库用户phpadmin可以从网站服务器(192.168.30.21)登录数据库服务器&#xA;create user &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39; identified by &amp;#39;000000&amp;#39;; 为数据库用户phpadmin授权：可以读写store库&#xA;grant all privileges on store.* to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 如果想给store库下的goods表权限的话只需要把*改成goods就可以了，这里的*代表这store库下的全部表&#xA;grant all privileges on store.goods to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 创建Table 在给表中插入数据的前提是创建好表才可以往表中插入数据&#xA;创建table(给store 库下创建名为goods的表)&#xA;create table store.goods(gid char(32),gname char(32),gprice decimal(9,2)); 给goods表中插入数据&#xA;insert into store.goods values(&amp;#39;001&amp;#39;,&amp;#39;apple&amp;#39;,&amp;#39;11&amp;#39;); MySQL读写分离 架构图 MySQL读写分离概念 MYSQL读写分离的原理其实就是让Master数据库处理事务性增、删除、修改、更新操作（CREATE、INSERT、UPDATE、DELETE），而让Slave数据库处理SELECT操作，MYSQL读写分离前提是基于MYSQL主从复制，这样可以保证在Master上修改数据，Slave同步之后，WEB应用可以读取到Slave端的数据。&#xA;MySQL-proxy是官方提供的MySQL中间件产品可以实现负载平衡，读写分离，failover等。&#xA;SQL语句并不直接进入到master数据库或者slave数据库，而是进入到 proxy，然后proxy判断这条语句是有关写的语句（包括insert、update、delete）还 是读语句（select），当是写语句的时候，那么proxy将向master所在的服务器发出请 求，同理，如果是读语句的时候，proxy将向slave所在的服务器发出请求。&#xA;介绍 处于client段和MySQL server 端之间的应用 可以监测、分析或改变它们的通信 使用灵活，没有限制，常用的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等 环境搭建 需要3台服务器，Proxy可以选择和MySQL部署在同一台服务器，也可以选择单独部署在另一台独立服务器。&#xA;并且Master和Slave服务器配置好了数据库的主从同步&#xA;hostname IP Master 192.168.30.91 Slave 192.168.30.92 Proxy 192.168.30.93 下载mysql-proxy使用MySQL-Proxy&#xA;注意：要在Master和Slave数据库里面给phpadmin用户权限&#xA;例:grant all privileges on store.</description>
+    </item>
+    <item>
+      <title>Git出现push报错</title>
+      <link>http://localhost:1313/posts/git%E5%87%BA%E7%8E%B0push%E6%8A%A5%E9%94%99/</link>
+      <pubDate>Thu, 14 Sep 2023 20:53:53 +0800</pubDate>
+      <guid>http://localhost:1313/posts/git%E5%87%BA%E7%8E%B0push%E6%8A%A5%E9%94%99/</guid>
+      <description>&lt;p&gt;当Git Bash 使用push的时候出现了以下的这个报错的，可以尝试下使用一下命令&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;How to solve this problem of &amp;quot;! [rejected] master -&amp;gt; master (fetch first)&amp;quot;&lt;/code&gt;&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;First Do this ...&#xD;&#xA;&#xD;&#xA;git fetch origin master&#xD;&#xA;git merge  master&#xD;&#xA;&#xD;&#xA;Then, do this ...&#xD;&#xA;&#xD;&#xA;git fetch origin master:tmp&#xD;&#xA;git rebase tmp&#xD;&#xA;git push origin HEAD:master&#xD;&#xA;git branch -D tmp&#xD;&#xA;&#xD;&#xA;Now everything works well.&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+  </channel>
+</rss>
