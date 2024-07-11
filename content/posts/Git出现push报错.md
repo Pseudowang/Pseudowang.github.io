@@ -2,8 +2,8 @@
 title = 'Git出现push报错'
 date = 2023-09-14T20:53:53+08:00
 draft = false
-categories = ["Notes"]
-tags = ["Git"]
+categories = ["Tech"]
+tags = ["Git", "Tech"]
 +++
 
 

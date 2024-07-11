@@ -31,10 +31,10 @@ link = "/index.xml"
 name = "About"
 link = "/about/index.html"
 
-# [[params.socials]]
-# name = "Tags"
-# link = "/tags/index.html"
+[[params.socials]]
+name = "Tags"
+link = "/tags/index.html"
 
-# [[params.socials]]
-# name = "Daily"
-# link = "/daily/index.html"
+[[params.socials]]
+name = "Daily"
+link = "/daily/index.html"

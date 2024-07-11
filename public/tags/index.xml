@@ -6,20 +6,34 @@
     <description>Recent content in Tags on RAMDOM THOUGHTS</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 Dec 2023 16:09:11 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jul 2024 21:27:28 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Notes</title>
+      <link>http://localhost:1313/tags/notes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/notes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tech</title>
+      <link>http://localhost:1313/tags/tech/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/tech/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title> </title>
+      <link>http://localhost:1313/tags/-/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/-/</guid>
+      <description></description>
+    </item>
     <item>
       <title>日常</title>
       <link>http://localhost:1313/tags/%E6%97%A5%E5%B8%B8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/%E6%97%A5%E5%B8%B8/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>笔记</title>
-      <link>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</guid>
       <description></description>
     </item>
     <item>
@@ -48,6 +62,13 @@
       <link>http://localhost:1313/tags/git/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>笔记</title>
+      <link>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</guid>
       <description></description>
     </item>
   </channel>

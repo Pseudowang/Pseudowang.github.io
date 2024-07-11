@@ -2,7 +2,7 @@
 title = 'MySQL读写分离'
 date = 2023-09-14T21:02:55+08:00
 draft = false
-categories = ["Notes"]
+categories = ["Tech"]
 tags = ["MySQL"]
 +++
 

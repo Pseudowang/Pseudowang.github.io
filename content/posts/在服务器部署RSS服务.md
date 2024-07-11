@@ -2,8 +2,8 @@
 title = '在服务器部署RSS服务'
 date = 2023-09-14T21:05:37+08:00
 draft = false
-categories = ["Notes"]
-tags = ["工具"]
+categories = ["Tech"]
+tags = ["工具", "Notes"]
 +++
 
 

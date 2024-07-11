@@ -2,10 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/about/</loc>
-    <lastmod>2024-07-04T02:36:06+08:00</lastmod>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/docker%E6%90%AD%E5%BB%BAopenwrt/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/notes/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/tech/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/tech/</loc>
+    <lastmod>2024-07-11T21:27:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/-/</loc>
+    <lastmod>2024-07-11T21:04:57+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/-test-/</loc>
+    <lastmod>2024-07-11T21:04:57+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/test/</loc>
+    <lastmod>2024-07-11T21:04:57+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2024-07-04T02:36:06+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/daily/</loc>
@@ -14,29 +44,11 @@
     <loc>http://localhost:1313/posts/2023%E5%B9%B4%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2023-12-30T16:09:11+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2023-12-30T16:09:11+08:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/categories/life/</loc>
-    <lastmod>2023-12-30T16:09:11+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2023-12-30T16:09:11+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2023-12-30T16:09:11+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/%E6%97%A5%E5%B8%B8/</loc>
     <lastmod>2023-12-30T16:09:11+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/centos%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BFyum%E6%BA%90/</loc>
-    <lastmod>2023-09-25T10:48:57+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/notes/</loc>
-    <lastmod>2023-09-25T10:48:57+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2023-09-25T10:48:57+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2rss%E6%9C%8D%E5%8A%A1/</loc>
     <lastmod>2023-09-14T21:05:37+08:00</lastmod>
@@ -61,5 +73,11 @@
   </url><url>
     <loc>http://localhost:1313/posts/git%E5%87%BA%E7%8E%B0push%E6%8A%A5%E9%94%99/</loc>
     <lastmod>2023-09-14T20:53:53+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/centos%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BFyum%E6%BA%90/</loc>
+    <lastmod>2020-09-25T10:48:57+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-09-25T10:48:57+08:00</lastmod>
   </url>
 </urlset>

@@ -1,8 +1,8 @@
 +++
 title = 'Centos配置离线yum源'
-date = 2023-09-25T10:48:57+08:00
+date = 2020-09-25T10:48:57+08:00
 draft = false
-categories = ["Notes"]
+categories = ["Tech"]
 tags = ["笔记"]
 +++
 
