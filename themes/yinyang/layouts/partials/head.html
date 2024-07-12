@@ -48,6 +48,7 @@
     <style>{{ .Content | safeCSS }}</style>
   {{ end }}
 
+  <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css">
   {{ range .Site.Params.extraCSSFiles -}}
   <link rel="stylesheet" href="{{ $.Site.Params.staticPrefix }}{{ . | relURL }}">
   {{- end }}

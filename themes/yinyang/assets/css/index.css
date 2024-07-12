@@ -1,10 +1,31 @@
 /* global */
 
-body {
+/* body {
   font-family: "Bree Serif", sans-serif;
   -webkit-font-smoothing: antialiased;
   margin: 0 20px;
+} */
+
+
+body {
+    background-color: #FFF;
+    color: #444;
+    font-family: "LXGW WenKai Screen","Droid Serif",Georgia,"Times New Roman","PingFang SC","Hiragino Sans GB","Source Han Sans CN","WenQuanYi Micro Hei","Microsoft Yahei",serif;
+    font-size: 100%;
 }
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: "LXGW WenKai Screen","Droid Serif",Georgia,"Times New Roman","PingFang SC","Hiragino Sans GB","Source Han Sans CN","WenQuanYi Micro Hei","Microsoft Yahei",serif;
+}
+
+code, pre {
+    font-family: "LXGW WenKai Screen", "Droid Serif", Georgia, "Times New Roman", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "WenQuanYi Micro Hei", monospace;
+}
+.highlight pre code {
+    font-family: "LXGW WenKai Screen", "Droid Serif", Georgia, "Times New Roman", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "WenQuanYi Micro Hei", monospace;
+}
+
+
 
 article {
   max-width: 800px;
