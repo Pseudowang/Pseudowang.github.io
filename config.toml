@@ -5,7 +5,7 @@ theme = "yinyang"
 DefaultContentLanguage = "cn"
 
 [author]
-  name = "RAMDOM THOUGHTS"
+  name = "pseudowang"
   homepage = "http://localhost:1313/about/"
 
 # [languages]
