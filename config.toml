@@ -1,4 +1,4 @@
-baseURL = "https://wangzhr.top"
+baseURL = "https://wangzhr.top/"
 languageCode = "en-us"
 title = "RAMDOM THOUGHTS"
 theme = "yinyang"
@@ -7,6 +7,10 @@ DefaultContentLanguage = "cn"
 [author]
   name = "pseudowang"
   homepage = "http://localhost:1313/about/"
+
+
+# [outputs]
+#   home = ["HTML", "RSS", "JSON"]
 
 # [languages]
 #  [languages.en]
@@ -21,7 +25,7 @@ DefaultContentLanguage = "cn"
 [params]
 # disqus = "joway" # disqus account name 
 extraHead = ''
-mainSections = ["posts"]
+mainSections = ['daily', "posts" ]
 
 [[params.socials]]
 name = "RSS"
@@ -31,10 +35,10 @@ link = "/index.xml"
 name = "About"
 link = "/about/index.html"
 
-[[params.socials]]
-name = "Tags"
-link = "/tags/index.html"
+# [[params.socials]]
+# name = "Tags"
+# link = "/tags/index.html"
 
 [[params.socials]]
-name = "Daily"
+name = "Life"
 link = "/daily/index.html"

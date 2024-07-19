@@ -3,7 +3,7 @@ title = 'Docker搭建OpenWrt'
 date = 2024-06-23T21:27:28+08:00
 draft =  false
 categories = ["Tech"]
-tags = ["Notes", "Tech"]
+tags = ["Notes", "Basic", "Docker", "OpenWrt"]
 +++
 
 ### 前言

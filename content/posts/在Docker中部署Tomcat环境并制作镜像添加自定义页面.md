@@ -3,7 +3,7 @@ title = '在Docker中部署Tomcat环境并制作镜像添加自定义页面'
 date = 2024-05-03T21:39:25+08:00
 draft = false
 categories = ["Tech"]
-tags = ["Notes", "Basic"]
+tags = ["Notes", "Basic", "Docker"]
 +++
 
 当你开始这个任务的时候，希望你已经基本了解Docker是什么东西，基本的命令

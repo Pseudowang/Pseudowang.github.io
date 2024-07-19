@@ -2,6 +2,12 @@
 <html lang="{{ .Site.LanguageCode }}" prefix="og: http://ogp.me/ns#">
 {{ partial "head.html" . }}
 
+<!-- {{- $.Scratch.Add "index" slice -}}
+{{- range .Site.RegularPages -}}
+    {{- $.Scratch.Add "index" (dict "title" .Title "tags" .Params.tags "categories" .Params.categories "contents" .Plain "permalink" .Permalink "date" .Date "section" .Section) -}}
+{{- end -}}
+{{- $.Scratch.Get "index" | jsonify -}} -->
+
 <body>
   <article class="posts">
     <div class="row">
