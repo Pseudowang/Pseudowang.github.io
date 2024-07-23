@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docker on RAMDOM THOUGHTS</title>
+    <title>Docker on Pseudowang</title>
     <link>http://localhost:1313/tags/docker/</link>
-    <description>Recent content in Docker on RAMDOM THOUGHTS</description>
+    <description>Recent content in Docker on Pseudowang</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 19 Jul 2024 18:28:24 +0800</lastBuildDate>

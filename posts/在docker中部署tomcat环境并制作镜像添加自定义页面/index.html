@@ -8,7 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="pseudowang" />
   <meta property="og:url" content="http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/" />
-  <link rel="canonical" href="http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/" /><link rel="alternate" type="application/atom+xml" href="http://localhost:1313/index.xml" title="RAMDOM THOUGHTS">
+  <link rel="canonical" href="http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/" /><link rel="apple-touch-icon" href="/images/avatar.png" />
+  <link rel="icon" href="/images/avatar.png" />
+  <link rel="shortcut" href="/images/avatar.png" /><link rel="alternate" type="application/atom+xml" href="http://localhost:1313/index.xml" title="Pseudowang">
 
   <script type="application/ld+json">
   {
@@ -23,11 +25,11 @@
       "headline" : "在Docker中部署Tomcat环境并制作镜像添加自定义页面",
       "description" : "当你开始这个任务的时候，希望你已经基本了解Docker是什么东西，基本的命令\nDocker 快速入门文档(推荐)\nDocker 快速入门文档配套视频\nDocker官网给Docker的概述(开翻译插件去看)\n任务8 编写一个Java Web项目，发布为war包，并在Docker容器中运行\n我已经写好了一个基本的Java Web 页面，简单的Hello world，并完成了war包的打包 打包教程CSDN\n安装Docker Engine 我们用的系统是Centos7，所以就可以直接去Docker 官方去找安装教程Centos Docker安装教程，但是我给你的虚拟机已经配置好了Docker环境，所以这一步可以跳过，但是最好可以去看一下了解一下Docker大致的安装步骤，也很简单官方都是直接给一个 安装脚本，复制粘贴跑就完了\n编写一个Java Web项目，发布为war包 制作的 web 包已经一起发给你了，名字为myweb.war\n在Docker 运行一个Tomcat容器 [root@tomcat ~]# docker run -d -p 8080:8080 tomcat:latest # -d, --detach 在后台运行container并打印container ID # -p, --publish 将container端口发布到host #tomcat:latest 表示使用tomcat最新的镜像,latest的英文意思就是最新的,最近的 container 就是容器的意思\n你可能觉得上面是报错了，但其实不是的，他们提示的是Unable to find image \u0027tomcat:lastest\u0027 locally，说明你本地没有tomcat的镜像，他从Docker registries中给你拉取就是下载镜像(Docker registries 就像我之前给你解释的应用商城一样，而Docker registries是 Docker 官方的命名)\nChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed programming external connectivity on endpoint naughty_torvalds (0edd856e1b25bbf689ba039aac0d2aa33d4eb334fbd50d4915a774912ad27f3e): Error starting userland proxy: listen tcp4 0.",
       "inLanguage" : "en-US",
-      "author" : "pseudowang",
-      "creator" : "pseudowang",
-      "publisher": "pseudowang",
-      "accountablePerson" : "pseudowang",
-      "copyrightHolder" : "pseudowang",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
       "copyrightYear" : "2024",
       "datePublished": "2024-05-03 21:39:25 \u002b0800 CST",
       "dateModified" : "2024-05-03 21:39:25 \u002b0800 CST",
@@ -60,7 +62,7 @@ Docker官网给Docker的概述(开翻译插件去看)
 在Docker 运行一个Tomcat容器 [root@tomcat ~]# docker run -d -p 8080:8080 tomcat:latest # -d, --detach 在后台运行container并打印container ID # -p, --publish 将container端口发布到host #tomcat:latest 表示使用tomcat最新的镜像,latest的英文意思就是最新的,最近的 container 就是容器的意思
 你可能觉得上面是报错了，但其实不是的，他们提示的是Unable to find image &#39;tomcat:lastest&#39; locally，说明你本地没有tomcat的镜像，他从Docker registries中给你拉取就是下载镜像(Docker registries 就像我之前给你解释的应用商城一样，而Docker registries是 Docker 官方的命名)
 ChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed programming external connectivity on endpoint naughty_torvalds (0edd856e1b25bbf689ba039aac0d2aa33d4eb334fbd50d4915a774912ad27f3e): Error starting userland proxy: listen tcp4 0." />
-  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="/images/avatar.png" />
   
 
   
@@ -74,7 +76,7 @@ ChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed 
   
 
   <link href="/index.xml" rel="alternate" type="application/rss+xml"
-    title="RAMDOM THOUGHTS">
+    title="Pseudowang">
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
@@ -98,7 +100,7 @@ ChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed 
       >pseudowang</a
     >
   </div>
-  <div class="header-subtitle"></div>
+  <div class="header-subtitle">记录些无用却有趣的事物</div>
 </header>
 <div class="row end-md center-xs header-items">
   
@@ -135,7 +137,7 @@ ChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed 
             <div class="col-xs-6">
               
               <div class="post-author">
-                <a target="_blank" href="http://localhost:1313/about/">@pseudowang</a>
+                <a target="_blank" href="">@pseudowang</a>
               </div>
               
             </div>
