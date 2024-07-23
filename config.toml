@@ -1,12 +1,10 @@
 baseURL = "https://wangzhr.top/"
 languageCode = "en-us"
+
 title = "RAMDOM THOUGHTS"
+
 theme = "yinyang"
 DefaultContentLanguage = "cn"
-
-[author]
-  name = "pseudowang"
-  homepage = "http://localhost:1313/about/"
 
 
 # [outputs]
@@ -26,7 +24,13 @@ DefaultContentLanguage = "cn"
 # disqus = "joway" # disqus account name 
 extraHead = ''
 favicon = "/images/avatar.png"
+name = "pseudowang"
 mainSections = ["posts", "daily" ]
+description = "This is a test"
+
+[[params.author]]
+name = "pseudowang"
+homepage = "https://wangzhr.top/about"
 
 [[params.socials]]
 name = "RSS"

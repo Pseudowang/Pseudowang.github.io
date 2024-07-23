@@ -25,11 +25,11 @@
       "headline" : "从官方固件到Docker镜像：ImmortalWrt构建与运行之旅",
       "description" : "自从上次因为不小心(手贱)将自己小服务器分区给整坏了，导致开不了机，重新搭建了OpenWrt，不到1个月的时间，这次觉得上次使用的镜像太久没有更新了，然后加上是别人编译的镜像，这次想着自己来做一次镜像，并且学习一下，也碰到了很多自己没有遇到过的报错，也在一次又一次的报错中学习到了很多东西，如果有写错的地方，欢迎评论提出或者邮件，谢谢！\n使用官方固件 这里以x86-64平台为例\n首先获取固件的下载地址\n打开ImmortalWrt的官网， 选择当前最新的稳定版本23.05.3(笔记后面用的是23.05.2，因为写笔记的时候 23.05.3 刚刚更新，有些导航页还没完成) 选择x86平台\n选择64位 选择固件rootfs.tar.gz 鼠标右键点击\u0026quot;复制链接地址\u0026quot;获取到固件的下载地址，后面第6步需要用到 开始构建镜像\ngit clone https:\/\/github.com\/crazygit\/openwrt-x86-64.git openwrt-x86-64 cd openwrt-x86-64 # 参数1: 第5步中获取的固件下载地址 # 参数2: docker镜像的名字，可以随便指定: 如pseudowang\/openwrt-x86-64 .\/build.sh \u0026#34;https:\/\/downloads.immortalwrt.org\/releases\/23.05.2\/targets\/x86\/64\/immortalwrt-23.05.2-x86-64-rootfs.tar.gz\u0026#34; pseudowang\/openwrt-x86-64 设置网络 将网卡混杂模式打开 sudo ip link set enp3s0 promisc on 混杂模式（Promiscuous Mode）是一种网络接口卡 (NIC) 操作模式。在这种模式下，网络接口卡会接收它所在网络上的所有数据包，而不仅仅是发送给它的数据包。\n创建 Docker 网卡 docker network create -d macvlan --subnet=192.168.10.0\/24 --gateway=192.168.10.1 -o parent=enp3s0 macnet macvlan 是一种网络驱动程序，它允许Docker 容器直接连接到宿主机的物理网络。使用macvlan 时，每个容器将获得一个唯一的 MAC 地址， 并直接出现在物理网络上， 就像它是一个独立的设备\n使用刚刚创建的镜像并启动容器 docker run --restart always --name openwrt -d --network macnet --privileged pseudowang\/openwrt-x86-64 设置容器ip 到目前为止， 容器已经启动了，可以通过docker ps -a 查看运行的容器，然后查看OpenWRT 的 container ID",
       "inLanguage" : "en-US",
-      "author" : "pseudowang",
-      "creator" : "pseudowang",
-      "publisher": "pseudowang",
-      "accountablePerson" : "pseudowang",
-      "copyrightHolder" : "pseudowang",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
       "copyrightYear" : "2024",
       "datePublished": "2024-07-19 18:28:24 \u002b0800 CST",
       "dateModified" : "2024-07-19 18:28:24 \u002b0800 CST",
@@ -94,7 +94,7 @@ git clone https://github.com/crazygit/openwrt-x86-64.git openwrt-x86-64 cd openw
       >pseudowang</a
     >
   </div>
-  <div class="header-subtitle"></div>
+  <div class="header-subtitle">This is a test</div>
 </header>
 <div class="row end-md center-xs header-items">
   
@@ -131,7 +131,7 @@ git clone https://github.com/crazygit/openwrt-x86-64.git openwrt-x86-64 cd openw
             <div class="col-xs-6">
               
               <div class="post-author">
-                <a target="_blank" href="http://localhost:1313/about/">@pseudowang</a>
+                <a target="_blank" href="">@pseudowang</a>
               </div>
               
             </div>
