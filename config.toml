@@ -25,7 +25,8 @@ DefaultContentLanguage = "cn"
 [params]
 # disqus = "joway" # disqus account name 
 extraHead = ''
-mainSections = ['daily', "posts" ]
+favicon = "/images/avatar.png"
+mainSections = ["posts", "daily" ]
 
 [[params.socials]]
 name = "RSS"

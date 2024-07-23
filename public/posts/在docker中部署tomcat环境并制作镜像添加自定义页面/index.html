@@ -8,7 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="pseudowang" />
   <meta property="og:url" content="http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/" />
-  <link rel="canonical" href="http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/" /><link rel="alternate" type="application/atom+xml" href="http://localhost:1313/index.xml" title="RAMDOM THOUGHTS">
+  <link rel="canonical" href="http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/" /><link rel="apple-touch-icon" href="/images/avatar.png" />
+  <link rel="icon" href="/images/avatar.png" />
+  <link rel="shortcut" href="/images/avatar.png" /><link rel="alternate" type="application/atom+xml" href="http://localhost:1313/index.xml" title="RAMDOM THOUGHTS">
 
   <script type="application/ld+json">
   {
@@ -60,7 +62,7 @@ Docker官网给Docker的概述(开翻译插件去看)
 在Docker 运行一个Tomcat容器 [root@tomcat ~]# docker run -d -p 8080:8080 tomcat:latest # -d, --detach 在后台运行container并打印container ID # -p, --publish 将container端口发布到host #tomcat:latest 表示使用tomcat最新的镜像,latest的英文意思就是最新的,最近的 container 就是容器的意思
 你可能觉得上面是报错了，但其实不是的，他们提示的是Unable to find image &#39;tomcat:lastest&#39; locally，说明你本地没有tomcat的镜像，他从Docker registries中给你拉取就是下载镜像(Docker registries 就像我之前给你解释的应用商城一样，而Docker registries是 Docker 官方的命名)
 ChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed programming external connectivity on endpoint naughty_torvalds (0edd856e1b25bbf689ba039aac0d2aa33d4eb334fbd50d4915a774912ad27f3e): Error starting userland proxy: listen tcp4 0." />
-  <meta property="og:locale" content="en-us" /><meta property="og:image" content="" />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="/images/avatar.png" />
   
 
   

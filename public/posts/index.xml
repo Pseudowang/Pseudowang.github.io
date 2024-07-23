@@ -30,13 +30,6 @@
       <description>当你开始这个任务的时候，希望你已经基本了解Docker是什么东西，基本的命令&#xA;Docker 快速入门文档(推荐)&#xA;Docker 快速入门文档配套视频&#xA;Docker官网给Docker的概述(开翻译插件去看)&#xA;任务8 编写一个Java Web项目，发布为war包，并在Docker容器中运行&#xA;我已经写好了一个基本的Java Web 页面，简单的Hello world，并完成了war包的打包 打包教程CSDN&#xA;安装Docker Engine 我们用的系统是Centos7，所以就可以直接去Docker 官方去找安装教程Centos Docker安装教程，但是我给你的虚拟机已经配置好了Docker环境，所以这一步可以跳过，但是最好可以去看一下了解一下Docker大致的安装步骤，也很简单官方都是直接给一个 安装脚本，复制粘贴跑就完了&#xA;编写一个Java Web项目，发布为war包 制作的 web 包已经一起发给你了，名字为myweb.war&#xA;在Docker 运行一个Tomcat容器 [root@tomcat ~]# docker run -d -p 8080:8080 tomcat:latest # -d, --detach 在后台运行container并打印container ID # -p, --publish 将container端口发布到host #tomcat:latest 表示使用tomcat最新的镜像,latest的英文意思就是最新的,最近的 container 就是容器的意思&#xA;你可能觉得上面是报错了，但其实不是的，他们提示的是Unable to find image &#39;tomcat:lastest&#39; locally，说明你本地没有tomcat的镜像，他从Docker registries中给你拉取就是下载镜像(Docker registries 就像我之前给你解释的应用商城一样，而Docker registries是 Docker 官方的命名)&#xA;ChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed programming external connectivity on endpoint naughty_torvalds (0edd856e1b25bbf689ba039aac0d2aa33d4eb334fbd50d4915a774912ad27f3e): Error starting userland proxy: listen tcp4 0.</description>
     </item>
     <item>
-      <title>2023年总结</title>
-      <link>http://localhost:1313/posts/2023%E5%B9%B4%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Sat, 30 Dec 2023 16:09:11 +0800</pubDate>
-      <guid>http://localhost:1313/posts/2023%E5%B9%B4%E6%80%BB%E7%BB%93/</guid>
-      <description>&lt;p&gt;对我的2023年的总结文章&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>在服务器部署RSS服务</title>
       <link>http://localhost:1313/posts/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2rss%E6%9C%8D%E5%8A%A1/</link>
       <pubDate>Thu, 14 Sep 2023 21:05:37 +0800</pubDate>
