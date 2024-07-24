@@ -10,9 +10,9 @@
     <atom:link href="http://localhost:1313/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL读写分离</title>
-      <link>http://localhost:1313/posts/mysql%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/</link>
+      <link>http://localhost:1313/posts/mysql-read-write-separation/</link>
       <pubDate>Thu, 14 Sep 2023 21:02:55 +0800</pubDate>
-      <guid>http://localhost:1313/posts/mysql%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/</guid>
+      <guid>http://localhost:1313/posts/mysql-read-write-separation/</guid>
       <description>MySQL基本教程 增加用户phpadmin并完成授权 创建数据库用户phpadmin可以从网站服务器(192.168.30.21)登录数据库服务器&#xA;create user &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39; identified by &amp;#39;000000&amp;#39;; 为数据库用户phpadmin授权：可以读写store库&#xA;grant all privileges on store.* to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 如果想给store库下的goods表权限的话只需要把*改成goods就可以了，这里的*代表这store库下的全部表&#xA;grant all privileges on store.goods to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 创建Table 在给表中插入数据的前提是创建好表才可以往表中插入数据&#xA;创建table(给store 库下创建名为goods的表)&#xA;create table store.goods(gid char(32),gname char(32),gprice decimal(9,2)); 给goods表中插入数据&#xA;insert into store.goods values(&amp;#39;001&amp;#39;,&amp;#39;apple&amp;#39;,&amp;#39;11&amp;#39;); MySQL读写分离 架构图 MySQL读写分离概念 MYSQL读写分离的原理其实就是让Master数据库处理事务性增、删除、修改、更新操作（CREATE、INSERT、UPDATE、DELETE），而让Slave数据库处理SELECT操作，MYSQL读写分离前提是基于MYSQL主从复制，这样可以保证在Master上修改数据，Slave同步之后，WEB应用可以读取到Slave端的数据。&#xA;MySQL-proxy是官方提供的MySQL中间件产品可以实现负载平衡，读写分离，failover等。&#xA;SQL语句并不直接进入到master数据库或者slave数据库，而是进入到 proxy，然后proxy判断这条语句是有关写的语句（包括insert、update、delete）还 是读语句（select），当是写语句的时候，那么proxy将向master所在的服务器发出请 求，同理，如果是读语句的时候，proxy将向slave所在的服务器发出请求。&#xA;介绍 处于client段和MySQL server 端之间的应用 可以监测、分析或改变它们的通信 使用灵活，没有限制，常用的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等 环境搭建 需要3台服务器，Proxy可以选择和MySQL部署在同一台服务器，也可以选择单独部署在另一台独立服务器。&#xA;并且Master和Slave服务器配置好了数据库的主从同步&#xA;hostname IP Master 192.168.30.91 Slave 192.168.30.92 Proxy 192.168.30.93 下载mysql-proxy使用MySQL-Proxy&#xA;注意：要在Master和Slave数据库里面给phpadmin用户权限&#xA;例:grant all privileges on store.</description>
     </item>
   </channel>
