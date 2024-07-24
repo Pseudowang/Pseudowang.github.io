@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on RAMDOM THOUGHTS</title>
+    <title>Posts on Pseudowang</title>
     <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on RAMDOM THOUGHTS</description>
+    <description>Recent content in Posts on Pseudowang</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 19 Jul 2024 18:28:24 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>从官方固件到Docker镜像：ImmortalWrt构建与运行之旅</title>
-      <link>http://localhost:1313/posts/%E4%BB%8E%E5%AE%98%E6%96%B9%E5%9B%BA%E4%BB%B6%E5%88%B0docker%E9%95%9C%E5%83%8Fimmortalwrt%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%BF%90%E8%A1%8C%E4%B9%8B%E6%97%85/</link>
+      <link>http://localhost:1313/posts/the-journey-of-building-and-running-immortalwrt/</link>
       <pubDate>Fri, 19 Jul 2024 18:28:24 +0800</pubDate>
-      <guid>http://localhost:1313/posts/%E4%BB%8E%E5%AE%98%E6%96%B9%E5%9B%BA%E4%BB%B6%E5%88%B0docker%E9%95%9C%E5%83%8Fimmortalwrt%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%BF%90%E8%A1%8C%E4%B9%8B%E6%97%85/</guid>
+      <guid>http://localhost:1313/posts/the-journey-of-building-and-running-immortalwrt/</guid>
       <description>自从上次因为不小心(手贱)将自己小服务器分区给整坏了，导致开不了机，重新搭建了OpenWrt，不到1个月的时间，这次觉得上次使用的镜像太久没有更新了，然后加上是别人编译的镜像，这次想着自己来做一次镜像，并且学习一下，也碰到了很多自己没有遇到过的报错，也在一次又一次的报错中学习到了很多东西，如果有写错的地方，欢迎评论提出或者邮件，谢谢！&#xA;使用官方固件 这里以x86-64平台为例&#xA;首先获取固件的下载地址&#xA;打开ImmortalWrt的官网， 选择当前最新的稳定版本23.05.3(笔记后面用的是23.05.2，因为写笔记的时候 23.05.3 刚刚更新，有些导航页还没完成) 选择x86平台&#xA;选择64位 选择固件rootfs.tar.gz 鼠标右键点击&amp;quot;复制链接地址&amp;quot;获取到固件的下载地址，后面第6步需要用到 开始构建镜像&#xA;git clone https://github.com/crazygit/openwrt-x86-64.git openwrt-x86-64 cd openwrt-x86-64 # 参数1: 第5步中获取的固件下载地址 # 参数2: docker镜像的名字，可以随便指定: 如pseudowang/openwrt-x86-64 ./build.sh &amp;#34;https://downloads.immortalwrt.org/releases/23.05.2/targets/x86/64/immortalwrt-23.05.2-x86-64-rootfs.tar.gz&amp;#34; pseudowang/openwrt-x86-64 设置网络 将网卡混杂模式打开 sudo ip link set enp3s0 promisc on 混杂模式（Promiscuous Mode）是一种网络接口卡 (NIC) 操作模式。在这种模式下，网络接口卡会接收它所在网络上的所有数据包，而不仅仅是发送给它的数据包。&#xA;创建 Docker 网卡 docker network create -d macvlan --subnet=192.168.10.0/24 --gateway=192.168.10.1 -o parent=enp3s0 macnet macvlan 是一种网络驱动程序，它允许Docker 容器直接连接到宿主机的物理网络。使用macvlan 时，每个容器将获得一个唯一的 MAC 地址， 并直接出现在物理网络上， 就像它是一个独立的设备&#xA;使用刚刚创建的镜像并启动容器 docker run --restart always --name openwrt -d --network macnet --privileged pseudowang/openwrt-x86-64 设置容器ip 到目前为止， 容器已经启动了，可以通过docker ps -a 查看运行的容器，然后查看OpenWRT 的 container ID</description>
     </item>
     <item>
       <title>Docker搭建OpenWrt</title>
-      <link>http://localhost:1313/posts/docker%E6%90%AD%E5%BB%BAopenwrt/</link>
+      <link>http://localhost:1313/posts/using-docker-to-set-up-openwrt/</link>
       <pubDate>Sun, 23 Jun 2024 21:27:28 +0800</pubDate>
-      <guid>http://localhost:1313/posts/docker%E6%90%AD%E5%BB%BAopenwrt/</guid>
+      <guid>http://localhost:1313/posts/using-docker-to-set-up-openwrt/</guid>
       <description>前言 这周五的时候，因为上周实训完了，学到了很多东西，学到了Gitlab，之前就有想自己搭建一个自己的代码版本管理仓库，正好宿舍有一台小服务器在Docker 中运行着OpenWRT， 一开始一直拉不下来 GitLab 的镜像，好像是因为最近很多国内docker镜像站给关闭了，然后后面通过加速站拉取下拉了，然后发现磁盘空间不够了， 然后自己手贱去调整了分区，然后就再也开不了机了(就是自己对这个方面不了解，然后去乱搞才会导致这件事情的发生)， 不过上次搭建OpenWRT 和 nas-tools 的时候没有写笔记，然后已经忘了差不多了。这次花了很多时间就是因为上次没有写笔记进行总结，才会花费了这么长的时间，所以这次打算把全部过程记录下来，这样给以后自己手贱搞坏服务器的时候可以用(最好还是别发生，真的很累)&#xA;Docker 安装 这个可以直接搜索，因为现在使用的官方安装脚本已经不能用了，不知道到时候再用的时候，我推荐的安装方法会不会也不可以用了，建议要用的时候直接Google，使用国内可以安装的方法&#xA;设置网络 将网卡混杂模式打开 sudo ip link set enp3s0 promisc on 混杂模式（Promiscuous Mode）是一种网络接口卡 (NIC) 操作模式。在这种模式下，网络接口卡会接收它所在网络上的所有数据包，而不仅仅是发送给它的数据包。&#xA;创建 Docker 网卡 docker network create -d macvlan --subnet=192.168.10.0/24 --gateway=192.168.10.1 -o parent=enp3s0 macnet macvlan 是一种网络驱动程序，它允许Docker 容器直接连接到宿主机的物理网络。使用macvlan 时，每个容器将获得一个唯一的 MAC 地址， 并直接出现在物理网络上， 就像它是一个独立的设备&#xA;下载openwrt 镜像并启动容器 GitHub 仓库 这里包含了很全的镜像文件包含了 arm，x86，x64的docker镜像，我的机器是NUC，所以我安装的是x64 的 docker 镜像。可以通过uname -a 查看 拉取镜像docker pull sulinggg/openwrt:x86_64 如果拉取不下来的话，可以使用作者的 阿里云镜像仓库 registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64 镜像还是一样的&#xA;启动 OpenWRT 镜像 docker run --restart always --name openwrt -d --network macnet --privileged sulinggg/openwrt:x86_64 /sbin/init 设置容器ip 到目前为止， 容器已经启动了，可以通过docker ps -a 查看运行的容器，然后查看OpenWRT 的 container ID</description>
     </item>
     <item>
       <title>在Docker中部署Tomcat环境并制作镜像添加自定义页面</title>
-      <link>http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/</link>
+      <link>http://localhost:1313/posts/deploy-tomcat-in-docker-and-create-an-image-with-custom-pages/</link>
       <pubDate>Fri, 03 May 2024 21:39:25 +0800</pubDate>
-      <guid>http://localhost:1313/posts/%E5%9C%A8docker%E4%B8%AD%E9%83%A8%E7%BD%B2tomcat%E7%8E%AF%E5%A2%83%E5%B9%B6%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2/</guid>
+      <guid>http://localhost:1313/posts/deploy-tomcat-in-docker-and-create-an-image-with-custom-pages/</guid>
       <description>当你开始这个任务的时候，希望你已经基本了解Docker是什么东西，基本的命令&#xA;Docker 快速入门文档(推荐)&#xA;Docker 快速入门文档配套视频&#xA;Docker官网给Docker的概述(开翻译插件去看)&#xA;任务8 编写一个Java Web项目，发布为war包，并在Docker容器中运行&#xA;我已经写好了一个基本的Java Web 页面，简单的Hello world，并完成了war包的打包 打包教程CSDN&#xA;安装Docker Engine 我们用的系统是Centos7，所以就可以直接去Docker 官方去找安装教程Centos Docker安装教程，但是我给你的虚拟机已经配置好了Docker环境，所以这一步可以跳过，但是最好可以去看一下了解一下Docker大致的安装步骤，也很简单官方都是直接给一个 安装脚本，复制粘贴跑就完了&#xA;编写一个Java Web项目，发布为war包 制作的 web 包已经一起发给你了，名字为myweb.war&#xA;在Docker 运行一个Tomcat容器 [root@tomcat ~]# docker run -d -p 8080:8080 tomcat:latest # -d, --detach 在后台运行container并打印container ID # -p, --publish 将container端口发布到host #tomcat:latest 表示使用tomcat最新的镜像,latest的英文意思就是最新的,最近的 container 就是容器的意思&#xA;你可能觉得上面是报错了，但其实不是的，他们提示的是Unable to find image &#39;tomcat:lastest&#39; locally，说明你本地没有tomcat的镜像，他从Docker registries中给你拉取就是下载镜像(Docker registries 就像我之前给你解释的应用商城一样，而Docker registries是 Docker 官方的命名)&#xA;ChatGPT翻译 如果它报错 docker: Error response from daemon: driver failed programming external connectivity on endpoint naughty_torvalds (0edd856e1b25bbf689ba039aac0d2aa33d4eb334fbd50d4915a774912ad27f3e): Error starting userland proxy: listen tcp4 0.</description>
     </item>
     <item>
       <title>在服务器部署RSS服务</title>
-      <link>http://localhost:1313/posts/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2rss%E6%9C%8D%E5%8A%A1/</link>
+      <link>http://localhost:1313/posts/deploy-rss-service-on-the-server/</link>
       <pubDate>Thu, 14 Sep 2023 21:05:37 +0800</pubDate>
-      <guid>http://localhost:1313/posts/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2rss%E6%9C%8D%E5%8A%A1/</guid>
+      <guid>http://localhost:1313/posts/deploy-rss-service-on-the-server/</guid>
       <description>&lt;h3 id=&#34;步骤&#34;&gt;步骤:&lt;/h3&gt;&#xA;&lt;p&gt;系统为：Ubuntu 20.04&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;安装Docker Engine&lt;/li&gt;&#xA;&lt;li&gt;部署RSS服务&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
     </item>
     <item>
       <title>群晖添加第三方套件源提示无效位置的解决方法</title>
-      <link>http://localhost:1313/posts/%E7%BE%A4%E6%99%96%E6%B7%BB%E5%8A%A0%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6%E6%BA%90%E6%8F%90%E7%A4%BA%E6%97%A0%E6%95%88%E4%BD%8D%E7%BD%AE%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</link>
+      <link>http://localhost:1313/posts/fixing-invalid-location-error-for-third-party-package-sources-on-synology-nas/</link>
       <pubDate>Thu, 14 Sep 2023 21:05:30 +0800</pubDate>
-      <guid>http://localhost:1313/posts/%E7%BE%A4%E6%99%96%E6%B7%BB%E5%8A%A0%E7%AC%AC%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6%E6%BA%90%E6%8F%90%E7%A4%BA%E6%97%A0%E6%95%88%E4%BD%8D%E7%BD%AE%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</guid>
+      <guid>http://localhost:1313/posts/fixing-invalid-location-error-for-third-party-package-sources-on-synology-nas/</guid>
       <description>&lt;h1 id=&#34;群晖添加第三方套件源提示无效位置的解决方法&#34;&gt;&lt;em&gt;&lt;strong&gt;*群晖添加第三方套件源提示无效位置的解决方法*&lt;/strong&gt;&lt;/em&gt;&lt;/h1&gt;</description>
     </item>
     <item>
       <title>MySQL读写分离</title>
-      <link>http://localhost:1313/posts/mysql%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/</link>
+      <link>http://localhost:1313/posts/mysql-read-write-separation/</link>
       <pubDate>Thu, 14 Sep 2023 21:02:55 +0800</pubDate>
-      <guid>http://localhost:1313/posts/mysql%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/</guid>
+      <guid>http://localhost:1313/posts/mysql-read-write-separation/</guid>
       <description>MySQL基本教程 增加用户phpadmin并完成授权 创建数据库用户phpadmin可以从网站服务器(192.168.30.21)登录数据库服务器&#xA;create user &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39; identified by &amp;#39;000000&amp;#39;; 为数据库用户phpadmin授权：可以读写store库&#xA;grant all privileges on store.* to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 如果想给store库下的goods表权限的话只需要把*改成goods就可以了，这里的*代表这store库下的全部表&#xA;grant all privileges on store.goods to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 创建Table 在给表中插入数据的前提是创建好表才可以往表中插入数据&#xA;创建table(给store 库下创建名为goods的表)&#xA;create table store.goods(gid char(32),gname char(32),gprice decimal(9,2)); 给goods表中插入数据&#xA;insert into store.goods values(&amp;#39;001&amp;#39;,&amp;#39;apple&amp;#39;,&amp;#39;11&amp;#39;); MySQL读写分离 架构图 MySQL读写分离概念 MYSQL读写分离的原理其实就是让Master数据库处理事务性增、删除、修改、更新操作（CREATE、INSERT、UPDATE、DELETE），而让Slave数据库处理SELECT操作，MYSQL读写分离前提是基于MYSQL主从复制，这样可以保证在Master上修改数据，Slave同步之后，WEB应用可以读取到Slave端的数据。&#xA;MySQL-proxy是官方提供的MySQL中间件产品可以实现负载平衡，读写分离，failover等。&#xA;SQL语句并不直接进入到master数据库或者slave数据库，而是进入到 proxy，然后proxy判断这条语句是有关写的语句（包括insert、update、delete）还 是读语句（select），当是写语句的时候，那么proxy将向master所在的服务器发出请 求，同理，如果是读语句的时候，proxy将向slave所在的服务器发出请求。&#xA;介绍 处于client段和MySQL server 端之间的应用 可以监测、分析或改变它们的通信 使用灵活，没有限制，常用的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等 环境搭建 需要3台服务器，Proxy可以选择和MySQL部署在同一台服务器，也可以选择单独部署在另一台独立服务器。&#xA;并且Master和Slave服务器配置好了数据库的主从同步&#xA;hostname IP Master 192.168.30.91 Slave 192.168.30.92 Proxy 192.168.30.93 下载mysql-proxy使用MySQL-Proxy&#xA;注意：要在Master和Slave数据库里面给phpadmin用户权限&#xA;例:grant all privileges on store.</description>
     </item>
     <item>
       <title>Git出现push报错</title>
-      <link>http://localhost:1313/posts/git%E5%87%BA%E7%8E%B0push%E6%8A%A5%E9%94%99/</link>
+      <link>http://localhost:1313/posts/git-encountered-an-error-when-pushing/</link>
       <pubDate>Thu, 14 Sep 2023 20:53:53 +0800</pubDate>
-      <guid>http://localhost:1313/posts/git%E5%87%BA%E7%8E%B0push%E6%8A%A5%E9%94%99/</guid>
+      <guid>http://localhost:1313/posts/git-encountered-an-error-when-pushing/</guid>
       <description>&lt;p&gt;当Git Bash 使用push的时候出现了以下的这个报错的，可以尝试下使用一下命令&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;How to solve this problem of &amp;quot;! [rejected] master -&amp;gt; master (fetch first)&amp;quot;&lt;/code&gt;&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;First Do this ...&#xD;&#xA;&#xD;&#xA;git fetch origin master&#xD;&#xA;git merge  master&#xD;&#xA;&#xD;&#xA;Then, do this ...&#xD;&#xA;&#xD;&#xA;git fetch origin master:tmp&#xD;&#xA;git rebase tmp&#xD;&#xA;git push origin HEAD:master&#xD;&#xA;git branch -D tmp&#xD;&#xA;&#xD;&#xA;Now everything works well.&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     <item>
       <title>Centos配置离线yum源</title>
-      <link>http://localhost:1313/posts/centos%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BFyum%E6%BA%90/</link>
+      <link>http://localhost:1313/posts/configuring-offline-yum-repository-for-centos/</link>
       <pubDate>Fri, 25 Sep 2020 10:48:57 +0800</pubDate>
-      <guid>http://localhost:1313/posts/centos%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BFyum%E6%BA%90/</guid>
+      <guid>http://localhost:1313/posts/configuring-offline-yum-repository-for-centos/</guid>
       <description>&lt;p&gt;我们在Llinux系统中安装插件一般都是使用yum来进行安装插件(也可以通过rpm包来安装但是我们现在用的最多的是yum安装)，yum安装可以联网安装和离线安装，离线安装就是不能连通外网的时候来进行安装插件&lt;/p&gt;</description>
     </item>
   </channel>
