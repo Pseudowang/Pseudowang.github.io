@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Pseudowang</title>
+    <link>https://wangzhr.top/tags/git/</link>
+    <description>Recent content in Git on Pseudowang</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Sep 2023 20:53:53 +0800</lastBuildDate>
+    <atom:link href="https://wangzhr.top/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git出现push报错</title>
+      <link>https://wangzhr.top/posts/git-encountered-an-error-when-pushing/</link>
+      <pubDate>Thu, 14 Sep 2023 20:53:53 +0800</pubDate>
+      <guid>https://wangzhr.top/posts/git-encountered-an-error-when-pushing/</guid>
+      <description>&lt;p&gt;当Git Bash 使用push的时候出现了以下的这个报错的，可以尝试下使用一下命令&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;How to solve this problem of &amp;quot;! [rejected] master -&amp;gt; master (fetch first)&amp;quot;&lt;/code&gt;&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;First Do this ...&#xD;&#xA;&#xD;&#xA;git fetch origin master&#xD;&#xA;git merge  master&#xD;&#xA;&#xD;&#xA;Then, do this ...&#xD;&#xA;&#xD;&#xA;git fetch origin master:tmp&#xD;&#xA;git rebase tmp&#xD;&#xA;git push origin HEAD:master&#xD;&#xA;git branch -D tmp&#xD;&#xA;&#xD;&#xA;Now everything works well.&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+  </channel>
+</rss>

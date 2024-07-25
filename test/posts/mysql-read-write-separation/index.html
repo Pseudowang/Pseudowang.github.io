@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.126.3">
+
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="491fd5d7-5935-4716-a6e7-a712c4cd83cb"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="pseudowang" />
+  <meta property="og:url" content="https://wangzhr.top/posts/mysql-read-write-separation/" />
+  <link rel="canonical" href="https://wangzhr.top/posts/mysql-read-write-separation/" /><link rel="apple-touch-icon" href="/images/avatar.png" />
+  <link rel="icon" href="/images/avatar.png" />
+  <link rel="shortcut" href="/images/avatar.png" /><link rel="alternate" type="application/atom+xml" href="https://wangzhr.top/index.xml" title="Pseudowang">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/wangzhr.top\/"
+      },
+      "articleSection" : "posts",
+      "name" : "MySQL读写分离",
+      "headline" : "MySQL读写分离",
+      "description" : "MySQL基本教程 增加用户phpadmin并完成授权 创建数据库用户phpadmin可以从网站服务器(192.168.30.21)登录数据库服务器\ncreate user \u0026#39;phpadmin\u0026#39;@\u0026#39;192.168.30.21\u0026#39; identified by \u0026#39;000000\u0026#39;; 为数据库用户phpadmin授权：可以读写store库\ngrant all privileges on store.* to \u0026#39;phpadmin\u0026#39;@\u0026#39;192.168.30.21\u0026#39;; 如果想给store库下的goods表权限的话只需要把*改成goods就可以了，这里的*代表这store库下的全部表\ngrant all privileges on store.goods to \u0026#39;phpadmin\u0026#39;@\u0026#39;192.168.30.21\u0026#39;; 创建Table 在给表中插入数据的前提是创建好表才可以往表中插入数据\n创建table(给store 库下创建名为goods的表)\ncreate table store.goods(gid char(32),gname char(32),gprice decimal(9,2)); 给goods表中插入数据\ninsert into store.goods values(\u0026#39;001\u0026#39;,\u0026#39;apple\u0026#39;,\u0026#39;11\u0026#39;); MySQL读写分离 架构图 MySQL读写分离概念 MYSQL读写分离的原理其实就是让Master数据库处理事务性增、删除、修改、更新操作（CREATE、INSERT、UPDATE、DELETE），而让Slave数据库处理SELECT操作，MYSQL读写分离前提是基于MYSQL主从复制，这样可以保证在Master上修改数据，Slave同步之后，WEB应用可以读取到Slave端的数据。\nMySQL-proxy是官方提供的MySQL中间件产品可以实现负载平衡，读写分离，failover等。\nSQL语句并不直接进入到master数据库或者slave数据库，而是进入到 proxy，然后proxy判断这条语句是有关写的语句（包括insert、update、delete）还 是读语句（select），当是写语句的时候，那么proxy将向master所在的服务器发出请 求，同理，如果是读语句的时候，proxy将向slave所在的服务器发出请求。\n介绍 处于client段和MySQL server 端之间的应用 可以监测、分析或改变它们的通信 使用灵活，没有限制，常用的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等 环境搭建 需要3台服务器，Proxy可以选择和MySQL部署在同一台服务器，也可以选择单独部署在另一台独立服务器。\n并且Master和Slave服务器配置好了数据库的主从同步\nhostname IP Master 192.168.30.91 Slave 192.168.30.92 Proxy 192.168.30.93 下载mysql-proxy使用MySQL-Proxy\n注意：要在Master和Slave数据库里面给phpadmin用户权限\n例:grant all privileges on store.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2023",
+      "datePublished": "2023-09-14 21:02:55 \u002b0800 CST",
+      "dateModified" : "2023-09-14 21:02:55 \u002b0800 CST",
+      "url" : "https:\/\/wangzhr.top\/posts\/mysql-read-write-separation\/",
+      "keywords" : [ "MySQL", ]
+  }
+</script>
+<title>MySQL读写分离</title>
+  <meta property="og:title" content="MySQL读写分离" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="MySQL基本教程 增加用户phpadmin并完成授权 创建数据库用户phpadmin可以从网站服务器(192.168.30.21)登录数据库服务器
+create user &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39; identified by &amp;#39;000000&amp;#39;; 为数据库用户phpadmin授权：可以读写store库
+grant all privileges on store.* to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 如果想给store库下的goods表权限的话只需要把*改成goods就可以了，这里的*代表这store库下的全部表
+grant all privileges on store.goods to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 创建Table 在给表中插入数据的前提是创建好表才可以往表中插入数据
+创建table(给store 库下创建名为goods的表)
+create table store.goods(gid char(32),gname char(32),gprice decimal(9,2)); 给goods表中插入数据
+insert into store.goods values(&amp;#39;001&amp;#39;,&amp;#39;apple&amp;#39;,&amp;#39;11&amp;#39;); MySQL读写分离 架构图 MySQL读写分离概念 MYSQL读写分离的原理其实就是让Master数据库处理事务性增、删除、修改、更新操作（CREATE、INSERT、UPDATE、DELETE），而让Slave数据库处理SELECT操作，MYSQL读写分离前提是基于MYSQL主从复制，这样可以保证在Master上修改数据，Slave同步之后，WEB应用可以读取到Slave端的数据。
+MySQL-proxy是官方提供的MySQL中间件产品可以实现负载平衡，读写分离，failover等。
+SQL语句并不直接进入到master数据库或者slave数据库，而是进入到 proxy，然后proxy判断这条语句是有关写的语句（包括insert、update、delete）还 是读语句（select），当是写语句的时候，那么proxy将向master所在的服务器发出请 求，同理，如果是读语句的时候，proxy将向slave所在的服务器发出请求。
+介绍 处于client段和MySQL server 端之间的应用 可以监测、分析或改变它们的通信 使用灵活，没有限制，常用的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等 环境搭建 需要3台服务器，Proxy可以选择和MySQL部署在同一台服务器，也可以选择单独部署在另一台独立服务器。
+并且Master和Slave服务器配置好了数据库的主从同步
+hostname IP Master 192.168.30.91 Slave 192.168.30.92 Proxy 192.168.30.93 下载mysql-proxy使用MySQL-Proxy
+注意：要在Master和Slave数据库里面给phpadmin用户权限
+例:grant all privileges on store." />
+  <meta name="description" content="MySQL基本教程 增加用户phpadmin并完成授权 创建数据库用户phpadmin可以从网站服务器(192.168.30.21)登录数据库服务器
+create user &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39; identified by &amp;#39;000000&amp;#39;; 为数据库用户phpadmin授权：可以读写store库
+grant all privileges on store.* to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 如果想给store库下的goods表权限的话只需要把*改成goods就可以了，这里的*代表这store库下的全部表
+grant all privileges on store.goods to &amp;#39;phpadmin&amp;#39;@&amp;#39;192.168.30.21&amp;#39;; 创建Table 在给表中插入数据的前提是创建好表才可以往表中插入数据
+创建table(给store 库下创建名为goods的表)
+create table store.goods(gid char(32),gname char(32),gprice decimal(9,2)); 给goods表中插入数据
+insert into store.goods values(&amp;#39;001&amp;#39;,&amp;#39;apple&amp;#39;,&amp;#39;11&amp;#39;); MySQL读写分离 架构图 MySQL读写分离概念 MYSQL读写分离的原理其实就是让Master数据库处理事务性增、删除、修改、更新操作（CREATE、INSERT、UPDATE、DELETE），而让Slave数据库处理SELECT操作，MYSQL读写分离前提是基于MYSQL主从复制，这样可以保证在Master上修改数据，Slave同步之后，WEB应用可以读取到Slave端的数据。
+MySQL-proxy是官方提供的MySQL中间件产品可以实现负载平衡，读写分离，failover等。
+SQL语句并不直接进入到master数据库或者slave数据库，而是进入到 proxy，然后proxy判断这条语句是有关写的语句（包括insert、update、delete）还 是读语句（select），当是写语句的时候，那么proxy将向master所在的服务器发出请 求，同理，如果是读语句的时候，proxy将向slave所在的服务器发出请求。
+介绍 处于client段和MySQL server 端之间的应用 可以监测、分析或改变它们的通信 使用灵活，没有限制，常用的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等 环境搭建 需要3台服务器，Proxy可以选择和MySQL部署在同一台服务器，也可以选择单独部署在另一台独立服务器。
+并且Master和Slave服务器配置好了数据库的主从同步
+hostname IP Master 192.168.30.91 Slave 192.168.30.92 Proxy 192.168.30.93 下载mysql-proxy使用MySQL-Proxy
+注意：要在Master和Slave数据库里面给phpadmin用户权限
+例:grant all privileges on store." />
+  <meta property="og:locale" content="en-us" /><meta property="og:image" content="/images/avatar.png" />
+  
+
+  
+    <style>body{background-color:#fff;color:#444;font-family:lxgw wenkai screen,droid serif,Georgia,times new roman,pingfang sc,hiragino sans gb,source han sans cn,wenquanyi micro hei,microsoft yahei,serif;font-size:100%}h1,h2,h3,h4,h5,h6{font-family:lxgw wenkai screen,droid serif,Georgia,times new roman,pingfang sc,hiragino sans gb,source han sans cn,wenquanyi micro hei,microsoft yahei,serif}code,pre{font-family:lxgw wenkai screen,droid serif,Georgia,times new roman,pingfang sc,hiragino sans gb,source han sans cn,wenquanyi micro hei,monospace}.highlight pre code{font-family:lxgw wenkai screen,droid serif,Georgia,times new roman,pingfang sc,hiragino sans gb,source han sans cn,wenquanyi micro hei,monospace}article{max-width:800px;margin-left:auto;margin-right:auto}a{color:#000;text-decoration:none}a:hover{font-weight:600;text-decoration:underline}.post-ads{margin:50px 0}.markdown-body{font-size:18px;max-width:100%}.markdown-body a{text-decoration:underline;text-decoration-color:#000}.markdown-body blockquote{margin:0;padding:0 1em;color:#57606a;border-left:.25em solid #d0d7de}.markdown-body pre{padding:16px;overflow:auto;border-radius:10px}.markdown-body code{padding:.2em .4em;font-size:85%;background-color:#f6f8fa;border-radius:6px}.markdown-body pre>code{padding:0;font-size:100%;background-color:inherit;border:0}.Chinese .markdown-body{line-height:200%}.site-date-catalog{font-size:2rem}.header-title{font-size:2rem;font-weight:700;margin-top:32px;font-family:bungee shade,sans-serif}.header-title a{text-decoration:none}.header-subtitle{color:#666}.header-items{margin:10px 0}.header-item{margin:0 5px}.header-line{width:100%;border-width:2px;border-color:#482936;border-style:solid none none none}.lang-switch{font-weight:600}#posts-list{min-height:600px}.posts-line{font-size:1.2rem;margin:12px 0}.posts-categories{font-size:.8rem;margin:auto;text-align:center}.posts-category{padding:3px 0;border:#000 2px solid;border-radius:5px}.site-footer{margin-top:50px}.site-footer-item{margin-right:12px}.post-content img{max-width:100%;display:block;margin-right:auto;margin-top:12px}.post-header{margin-bottom:50px}.post-title{font-size:2rem;font-weight:600}.post-tags{display:inline;font-weight:600;padding:2px 5px;margin-right:6px;border:#000 2px solid;border-radius:5px}.post-date{font-weight:800;font-style:italic}.post-author{float:right;font-weight:600}.page-content{min-height:60%}.post-content{margin-bottom:50px}.post-content p{hyphens:auto;line-height:1.8;text-justify:ideographic;margin-bottom:1em}.related-content{border-width:3px;border-style:solid;border-color:#000;padding:0 10px;margin-bottom:50px;margin-top:100px}.related-content li{margin:5px 0}.taxonomy-term{font-size:1.5rem;text-align:center}.gallery-img{text-align:center}.gallery-img span{text-align:center}.gallery-img-desc{font-size:.8em;font-weight:800}#disqus_thread{position:relative}#disqus_thread:after{content:"";display:block;height:55px;width:100%;position:absolute;bottom:0;background:#fff}@media screen and (max-width:600px){.header-title,.header-subtitle,.header-items{text-align:center}.posts-line{font-size:16px}.markdown-body{font-size:16px}.post-title{font-size:2rem}.post-content p{letter-spacing:.05em}}@media screen and (max-width:48em){.posts-category{display:none}}</style>
+  
+  
+    <style>.container,.container-fluid{margin-right:auto;margin-left:auto}.container-fluid{padding-right:2rem;padding-left:2rem}.row{box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:0;-ms-flex:0 1 auto;flex:initial;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-.5rem;margin-left:-.5rem}.row.reverse{-webkit-box-orient:horizontal;-webkit-box-direction:reverse;-ms-flex-direction:row-reverse;flex-direction:row-reverse}.col.reverse{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.col-xs,.col-xs-1,.col-xs-10,.col-xs-11,.col-xs-12,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-offset-0,.col-xs-offset-1,.col-xs-offset-10,.col-xs-offset-11,.col-xs-offset-12,.col-xs-offset-2,.col-xs-offset-3,.col-xs-offset-4,.col-xs-offset-5,.col-xs-offset-6,.col-xs-offset-7,.col-xs-offset-8,.col-xs-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-xs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-xs-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-xs-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-xs-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-xs-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-xs-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-xs-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-xs-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-xs-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-xs-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-xs-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-xs-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-xs-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-xs-offset-0{margin-left:0}.col-xs-offset-1{margin-left:8.33333333%}.col-xs-offset-2{margin-left:16.66666667%}.col-xs-offset-3{margin-left:25%}.col-xs-offset-4{margin-left:33.33333333%}.col-xs-offset-5{margin-left:41.66666667%}.col-xs-offset-6{margin-left:50%}.col-xs-offset-7{margin-left:58.33333333%}.col-xs-offset-8{margin-left:66.66666667%}.col-xs-offset-9{margin-left:75%}.col-xs-offset-10{margin-left:83.33333333%}.col-xs-offset-11{margin-left:91.66666667%}.start-xs{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-xs{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-xs{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-xs{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-xs{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-xs{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-xs{-ms-flex-pack:distribute;justify-content:space-around}.between-xs{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-xs{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-xs{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}@media only screen and (min-width:48em){.container{width:49rem}.col-sm,.col-sm-1,.col-sm-10,.col-sm-11,.col-sm-12,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-offset-0,.col-sm-offset-1,.col-sm-offset-10,.col-sm-offset-11,.col-sm-offset-12,.col-sm-offset-2,.col-sm-offset-3,.col-sm-offset-4,.col-sm-offset-5,.col-sm-offset-6,.col-sm-offset-7,.col-sm-offset-8,.col-sm-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-sm{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-sm-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-sm-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-sm-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-sm-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-sm-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-sm-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-sm-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-sm-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-sm-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-sm-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-sm-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-sm-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-sm-offset-0{margin-left:0}.col-sm-offset-1{margin-left:8.33333333%}.col-sm-offset-2{margin-left:16.66666667%}.col-sm-offset-3{margin-left:25%}.col-sm-offset-4{margin-left:33.33333333%}.col-sm-offset-5{margin-left:41.66666667%}.col-sm-offset-6{margin-left:50%}.col-sm-offset-7{margin-left:58.33333333%}.col-sm-offset-8{margin-left:66.66666667%}.col-sm-offset-9{margin-left:75%}.col-sm-offset-10{margin-left:83.33333333%}.col-sm-offset-11{margin-left:91.66666667%}.start-sm{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-sm{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-sm{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-sm{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-sm{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-sm{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-sm{-ms-flex-pack:distribute;justify-content:space-around}.between-sm{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-sm{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-sm{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:64em){.container{width:65rem}.col-md,.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-offset-0,.col-md-offset-1,.col-md-offset-10,.col-md-offset-11,.col-md-offset-12,.col-md-offset-2,.col-md-offset-3,.col-md-offset-4,.col-md-offset-5,.col-md-offset-6,.col-md-offset-7,.col-md-offset-8,.col-md-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-md{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-md-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-md-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-md-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-md-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-md-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-md-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-md-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-md-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-md-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-md-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-md-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-md-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-md-offset-0{margin-left:0}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-3{margin-left:25%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-6{margin-left:50%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-9{margin-left:75%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-11{margin-left:91.66666667%}.start-md{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-md{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-md{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-md{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-md{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-md{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-md{-ms-flex-pack:distribute;justify-content:space-around}.between-md{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-md{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-md{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}@media only screen and (min-width:75em){.container{width:76rem}.col-lg,.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9,.col-lg-offset-0,.col-lg-offset-1,.col-lg-offset-10,.col-lg-offset-11,.col-lg-offset-12,.col-lg-offset-2,.col-lg-offset-3,.col-lg-offset-4,.col-lg-offset-5,.col-lg-offset-6,.col-lg-offset-7,.col-lg-offset-8,.col-lg-offset-9{box-sizing:border-box;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:none;padding-right:.5rem;padding-left:.5rem}.col-lg{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;max-width:100%}.col-lg-1{-ms-flex-preferred-size:8.33333333%;flex-basis:8.33333333%;max-width:8.33333333%}.col-lg-2{-ms-flex-preferred-size:16.66666667%;flex-basis:16.66666667%;max-width:16.66666667%}.col-lg-3{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.col-lg-4{-ms-flex-preferred-size:33.33333333%;flex-basis:33.33333333%;max-width:33.33333333%}.col-lg-5{-ms-flex-preferred-size:41.66666667%;flex-basis:41.66666667%;max-width:41.66666667%}.col-lg-6{-ms-flex-preferred-size:50%;flex-basis:50%;max-width:50%}.col-lg-7{-ms-flex-preferred-size:58.33333333%;flex-basis:58.33333333%;max-width:58.33333333%}.col-lg-8{-ms-flex-preferred-size:66.66666667%;flex-basis:66.66666667%;max-width:66.66666667%}.col-lg-9{-ms-flex-preferred-size:75%;flex-basis:75%;max-width:75%}.col-lg-10{-ms-flex-preferred-size:83.33333333%;flex-basis:83.33333333%;max-width:83.33333333%}.col-lg-11{-ms-flex-preferred-size:91.66666667%;flex-basis:91.66666667%;max-width:91.66666667%}.col-lg-12{-ms-flex-preferred-size:100%;flex-basis:100%;max-width:100%}.col-lg-offset-0{margin-left:0}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-11{margin-left:91.66666667%}.start-lg{-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;text-align:start}.center-lg{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-align:center}.end-lg{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;text-align:end}.top-lg{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.middle-lg{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.bottom-lg{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.around-lg{-ms-flex-pack:distribute;justify-content:space-around}.between-lg{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.first-lg{-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1}.last-lg{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}}</style>
+  
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css">
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="Pseudowang">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Bungee+Shade" rel="stylesheet">
+  
+  
+
+  
+  
+</head>
+
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="header-title">
+    <a href="/"
+      >pseudowang</a
+    >
+  </div>
+  <div class="header-subtitle">记录无用却有趣的事物</div>
+</header>
+<div class="row end-md center-xs header-items">
+  
+  <div class="header-item">
+    <a href="/index.xml" target="_blank">RSS</a>
+  </div>
+  
+  <div class="header-item">
+    <a href="/about/index.html" target="_blank">About</a>
+  </div>
+  
+  <div class="header-item">
+    <a href="/daily/index.html" target="_blank">Life</a>
+  </div>
+  
+</div>
+<div class="row end-xs">
+   
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">MySQL读写分离</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2023-09-14 21:02:55 CST">
+                2023-09-14
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+              <div class="post-author">
+                <a target="_blank" href="">@pseudowang</a>
+              </div>
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h3 id="mysql基本教程">MySQL基本教程</h3>
+<h4 id="增加用户phpadmin并完成授权">增加用户<code>phpadmin</code>并完成授权</h4>
+<ol>
+<li>
+<p>创建数据库用户<code>phpadmin</code>可以从网站服务器(192.168.30.21)登录数据库服务器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">user</span> <span style="color:#e6db74">&#39;phpadmin&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;192.168.30.21&#39;</span> <span style="color:#66d9ef">identified</span> <span style="color:#66d9ef">by</span> <span style="color:#e6db74">&#39;000000&#39;</span>;
+</span></span></code></pre></div></li>
+<li>
+<p>为数据库用户<code>phpadmin</code>授权：可以读写store库</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">grant</span> <span style="color:#66d9ef">all</span> <span style="color:#66d9ef">privileges</span> <span style="color:#66d9ef">on</span> store.<span style="color:#f92672">*</span> <span style="color:#66d9ef">to</span> <span style="color:#e6db74">&#39;phpadmin&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;192.168.30.21&#39;</span>; 
+</span></span></code></pre></div><p>如果想给store库下的goods表权限的话只需要把*改成goods就可以了，这里的<code>*</code>代表这store库下的全部表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">grant</span> <span style="color:#66d9ef">all</span> <span style="color:#66d9ef">privileges</span> <span style="color:#66d9ef">on</span> store.goods <span style="color:#66d9ef">to</span> <span style="color:#e6db74">&#39;phpadmin&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;192.168.30.21&#39;</span>;
+</span></span></code></pre></div></li>
+</ol>
+<h4 id="创建table">创建Table</h4>
+<p>在给表中插入数据的前提是创建好表才可以往表中插入数据</p>
+<ol>
+<li>
+<p>创建table(给store 库下创建名为goods的表)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> store.<span style="color:#a6e22e">goods</span>(gid <span style="color:#66d9ef">char</span>(<span style="color:#ae81ff">32</span>),gname <span style="color:#66d9ef">char</span>(<span style="color:#ae81ff">32</span>),gprice <span style="color:#66d9ef">decimal</span>(<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">2</span>));
+</span></span></code></pre></div></li>
+<li>
+<p>给goods表中插入数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mariadb" data-lang="mariadb"><span style="display:flex;"><span><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> store.goods <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;001&#39;</span>,<span style="color:#e6db74">&#39;apple&#39;</span>,<span style="color:#e6db74">&#39;11&#39;</span>);
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="mysql读写分离">MySQL读写分离</h3>
+<h4 id="架构图">架构图</h4>
+<p><img src="https://wangzhrbuckets.s3.bitiful.net/picture/2023/09/202309281327149.png" alt=""></p>
+<h4 id="mysql读写分离概念">MySQL读写分离概念</h4>
+<p>MYSQL读写分离的原理其实就是让Master数据库处理事务性增、删除、修改、更新操作（CREATE、INSERT、UPDATE、DELETE），而让Slave数据库处理SELECT操作，MYSQL读写分离前提是基于MYSQL主从复制，这样可以保证在Master上修改数据，Slave同步之后，WEB应用可以读取到Slave端的数据。</p>
+<p>MySQL-proxy是官方提供的MySQL中间件产品可以实现负载平衡，读写分离，failover等。</p>
+<p>SQL语句并不直接进入到master数据库或者slave数据库，而是进入到 proxy，然后proxy判断这条语句是有关写的语句（包括insert、update、delete）还 是读语句（select），当是写语句的时候，那么proxy将向master所在的服务器发出请 求，同理，如果是读语句的时候，proxy将向slave所在的服务器发出请求。</p>
+<h5 id="介绍">介绍</h5>
+<ol>
+<li>处于client段和MySQL server 端之间的应用</li>
+<li>可以监测、分析或改变它们的通信</li>
+<li>使用灵活，没有限制，常用的用途包括：负载平衡，故障、查询分析，查询过滤和修改等等</li>
+</ol>
+<h4 id="环境搭建">环境搭建</h4>
+<p>需要3台服务器，Proxy可以选择和MySQL部署在同一台服务器，也可以选择单独部署在另一台独立服务器。</p>
+<p>并且Master和Slave服务器配置好了数据库的主从同步</p>
+<p><img src="https://wangzhrbuckets.s3.bitiful.net/picture/2023/09/202309281327455.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>hostname</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Master</td>
+<td>192.168.30.91</td>
+</tr>
+<tr>
+<td>Slave</td>
+<td>192.168.30.92</td>
+</tr>
+<tr>
+<td>Proxy</td>
+<td>192.168.30.93</td>
+</tr>
+</tbody>
+</table>
+<p>下载<code>mysql-proxy</code>使用<a href="https://downloads.mysql.com/archives/proxy/?spm=a2c6h.12873639.article-detail.6.3255c98a05cY9H#downloads">MySQL-Proxy</a></p>
+<p>注意：要在Master和Slave数据库里面给phpadmin用户权限</p>
+<p>例:<code>grant all privileges on store.goods to 'phpadmin'@'192.168.30.21';  </code></p>
+<p>其中的登录IP为你的MySQL-proxy服务器的IP</p>
+<h3 id="开始配置mysql-proxy">开始配置MySQL-Proxy</h3>
+<ul>
+<li>使用的服务器系统为RedHat 9</li>
+</ul>
+<h4 id="1-mysql主从同步">1. MySQL主从同步</h4>
+<p>老师文档里面有教过，先暂时不写教程</p>
+<h4 id="2-mysql-proxy配置">2. MySQL-Proxy配置</h4>
+<ol>
+<li>
+<p>安装MySQL-Proxy</p>
+<ul>
+<li>解压到指定目录</li>
+</ul>
+<pre tabindex="0"><code>tar -zxvf mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit.tar.gz
+mv mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit /usr/local/mysql-proxy
+</code></pre></li>
+<li>
+<p>配置mysql-proxy</p>
+<ul>
+<li>执行命令</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /usr/local/mysql-proxy
+</span></span><span style="display:flex;"><span>mkdir lua <span style="color:#75715e">#创建脚本存放目录</span>
+</span></span><span style="display:flex;"><span>mkdir logs <span style="color:#75715e">#创建日志目录</span>
+</span></span><span style="display:flex;"><span>cp share/doc/mysql-proxy/rw-splitting.lua ./lua <span style="color:#75715e">#复制读写分离配置文件</span>
+</span></span><span style="display:flex;"><span>cp share/doc/mysql-proxy/admin-sql.lua ./lua <span style="color:#75715e">#复制管理脚本</span>
+</span></span></code></pre></div><ul>
+<li>配置文件(创建/etc/mysql-proxy.cnf配置文件)</li>
+</ul>
+<pre tabindex="0"><code>[mysql-proxy]
+user=root  #运行mysql-proxy的用户
+admin-username=root  #主从mysql共有的用户
+admin-password=000000 #用户的密码
+proxy-address=192.168.30.93  #mysql-proxy运行ip和端口,不加端口默认4040
+proxy-backend-addresses=192.168.30.91  #指定后端主master写入数据
+proxy-read-only-backend-addresses=192.168.30.92 #指定后端从slave读取数据
+proxy-lua-script=/usr/local/mysql-proxy/lua/rw-splitting.lua #指定lua脚本
+admin-lua-script=/usr/local/mysql-proxy/lua/admin-sql.lua
+log-file=/usr/local/mysql-proxy/logs/mysql-proxy.log
+daemon=true #以守护进程方式运行
+log-level=info  #定义log日志级别，由高到低分别有(error|warning|info|message|debug)
+keepalive=true  #mysql-proxy崩溃时，尝试重启
+</code></pre><p>复制一定要删除全部注释，要不然会有报错，最好把注释前的空格也给删了</p>
+<p>然后设置<code>mysql-proxy.cnf</code>权限:<code>chmod 660 /etc/mysql-proxy.cnf</code>(所属用户和所属组有读写权限)</p>
+</li>
+<li>
+<p>配置读写分离脚本</p>
+<p><code>vi /usr/local/mysql-proxy/lua/rw-splitting.lua</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> not proxy.global.config.rwsplit <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span> proxy.global.config.rwsplit <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  min_idle_connections <span style="color:#f92672">=</span> 1, <span style="color:#75715e">#默认超过4个连接数时，才开始读写分离，改为1</span>
+</span></span><span style="display:flex;"><span>  max_idle_connections <span style="color:#f92672">=</span> 1, <span style="color:#75715e">#默认8，改为1</span>
+</span></span><span style="display:flex;"><span>  is_debug <span style="color:#f92672">=</span> false
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div></li>
+<li>
+<p>启动MySQL-proxy</p>
+</li>
+</ol>
+<pre tabindex="0"><code class="language-she" data-lang="she">/usr/local/mysql-proxy/bin/mysql-proxy --defaults-file=/etc/mysql-proxy.cnf
+</code></pre><ol start="5">
+<li>验证是否启动成功</li>
+</ol>
+<pre tabindex="0"><code>netstat -tupln | grep 4000
+</code></pre><p>​	关闭命令</p>
+<pre tabindex="0"><code>killall -9 mysql-proxy  #-9 为强制杀掉进程
+</code></pre><h4 id="3--测试">3.  测试</h4>
+<ol>
+<li>因为Master数据库负责读写，而Slave数据库只可以读</li>
+</ol>
+<p>​	在<code>fm1.php</code>和<code>fm2.php</code>文件中负责连接数据库读取<code>store</code>库下的<code>goods</code>中的表数据。但我的<code>Slave</code>数据库没有<code>store</code>库也没有<code>goods</code>表，只有我的<code>Master</code>数据库才有<code>goods</code>表。所以当我通过MySQL-Proxy服务器进行操作的时候，是查不到表中的数据的，因为我们读取数据库是走<code>Slave</code>数据库的，但我们<code>Slave</code>数据库是没有这个文件的。这就可以证明读取数据走的是<code>Slave</code>服务器而不是<code>Master</code>服务器。当我们在<code>Slave</code>数据库创建出<code>goods</code>表，并添加一些数据时候，当我们运行<code>fm1.php</code>的时候就可以查询到数据了</p>
+<ol start="2">
+<li>暂停读写分离测试
+<ol>
+<li>先暂时停掉主从同步</li>
+<li>在master节点插入数据，然后通过MySQL-proxy查询</li>
+<li>在slave节点插入数据，然后通过MySQL-proxy查询</li>
+</ol>
+</li>
+</ol>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+            <div class="post-tags">
+              <a href="/tags/mysql/">
+                MySQL
+              </a>
+            </div>
+            
+          </div>
+        </div>
+        
+          <div class="row">
+            <div class="col-xs-12">
+              
+            </div>
+          </div>
+
+          
+
+
+
+          
+          
+          <div style="height: 50px;"></div>
+          
+        
+
+        <div class="site-footer">
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  
+
+<script>
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

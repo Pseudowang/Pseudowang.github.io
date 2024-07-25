@@ -3,7 +3,7 @@ title = '2023年总结'
 date = 2023-12-30T16:09:11+08:00
 draft = false
 categories = ['Life']
-tags = ['日常']
+tags = ['Daily']
 +++
 
 对我的2023年的总结文章
