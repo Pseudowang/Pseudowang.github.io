@@ -2,88 +2,88 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://wangzhr.top/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/basic/</loc>
+    <loc>https://wangzhr.top/tags/basic/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://wangzhr.top/categories/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/docker/</loc>
+    <loc>https://wangzhr.top/tags/docker/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/openwrt/</loc>
+    <loc>https://wangzhr.top/tags/openwrt/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://wangzhr.top/posts/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://wangzhr.top/tags/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/tech/</loc>
+    <loc>https://wangzhr.top/categories/tech/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/the-journey-of-building-and-running-immortalwrt/</loc>
+    <loc>https://wangzhr.top/posts/the-journey-of-building-and-running-immortalwrt/</loc>
     <lastmod>2024-07-19T18:28:24+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://wangzhr.top/about/</loc>
     <lastmod>2024-07-04T02:36:06+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/using-docker-to-set-up-openwrt/</loc>
+    <loc>https://wangzhr.top/posts/using-docker-to-set-up-openwrt/</loc>
     <lastmod>2024-06-23T21:27:28+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/notes/</loc>
+    <loc>https://wangzhr.top/tags/notes/</loc>
     <lastmod>2024-06-23T21:27:28+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/deploy-tomcat-in-docker-and-create-an-image-with-custom-pages/</loc>
+    <loc>https://wangzhr.top/posts/deploy-tomcat-in-docker-and-create-an-image-with-custom-pages/</loc>
     <lastmod>2024-05-03T21:39:25+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/daily/summary-of-2023/</loc>
+    <loc>https://wangzhr.top/daily/summary-of-2023/</loc>
     <lastmod>2023-12-30T16:09:11+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/daily/</loc>
+    <loc>https://wangzhr.top/daily/</loc>
     <lastmod>2023-12-30T16:09:11+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/life/</loc>
+    <loc>https://wangzhr.top/categories/life/</loc>
     <lastmod>2023-12-30T16:09:11+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E6%97%A5%E5%B8%B8/</loc>
+    <loc>https://wangzhr.top/tags/%E6%97%A5%E5%B8%B8/</loc>
     <lastmod>2023-12-30T16:09:11+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/deploy-rss-service-on-the-server/</loc>
+    <loc>https://wangzhr.top/posts/deploy-rss-service-on-the-server/</loc>
     <lastmod>2023-09-14T21:05:37+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://wangzhr.top/tags/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2023-09-14T21:05:37+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E7%BE%A4%E6%99%96/</loc>
+    <loc>https://wangzhr.top/tags/%E7%BE%A4%E6%99%96/</loc>
     <lastmod>2023-09-14T21:05:30+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/fixing-invalid-location-error-for-third-party-package-sources-on-synology-nas/</loc>
+    <loc>https://wangzhr.top/posts/fixing-invalid-location-error-for-third-party-package-sources-on-synology-nas/</loc>
     <lastmod>2023-09-14T21:05:30+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/mysql/</loc>
+    <loc>https://wangzhr.top/tags/mysql/</loc>
     <lastmod>2023-09-14T21:02:55+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/mysql-read-write-separation/</loc>
+    <loc>https://wangzhr.top/posts/mysql-read-write-separation/</loc>
     <lastmod>2023-09-14T21:02:55+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/git/</loc>
+    <loc>https://wangzhr.top/tags/git/</loc>
     <lastmod>2023-09-14T20:53:53+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/git-encountered-an-error-when-pushing/</loc>
+    <loc>https://wangzhr.top/posts/git-encountered-an-error-when-pushing/</loc>
     <lastmod>2023-09-14T20:53:53+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/tech/</loc>
+    <loc>https://wangzhr.top/tags/tech/</loc>
     <lastmod>2023-09-14T20:53:53+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/configuring-offline-yum-repository-for-centos/</loc>
+    <loc>https://wangzhr.top/posts/configuring-offline-yum-repository-for-centos/</loc>
     <lastmod>2020-09-25T10:48:57+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://wangzhr.top/tags/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2020-09-25T10:48:57+08:00</lastmod>
   </url>
 </urlset>
