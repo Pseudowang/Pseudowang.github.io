@@ -25,7 +25,7 @@ DefaultContentLanguage = "cn"
 extraHead = ''
 favicon = "/images/avatar.png"
 name = "pseudowang"
-mainSections = ["posts", "daily" ]
+mainSections = ["posts", "daily", "notes" ]
 description = "记录无用却有趣的事物"
 
 [[params.author]]
