@@ -67,6 +67,8 @@ a:hover {
 .markdown-body pre {
   padding: 16px;
   overflow: auto;
+  /* font-size: 70%;
+  line-height: 120%; */
   border-radius: 10px;
 }
 
@@ -78,6 +80,16 @@ a:hover {
 }
 
 /* reset code */
+
+/* table {
+  border-collapse: collapse;
+  vertical-align: middle;
+  text-align: center;
+}
+
+thead, t h, td, tr {
+  border: 1px solod #b6b6b6
+} */
 
 .markdown-body pre > code {
   padding: 0;
