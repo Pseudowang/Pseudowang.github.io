@@ -19,3 +19,6 @@ draft = false
 **Pseudowang** 的命名很巧合，在编程中常用到的 *pseudocode* 是 「伪代码」的含义。再加上一直有在看的[Pseudoyu](https://www.pseudoyu.com/)的博客，所以就给自己取了一个这个名字
 
 希望自己能多输入一些新的知识和想法，有输出也要有输出，多写一些小文章。
+
+
+我的邮箱: pseudowang@outlook.com (期待您的来信)
