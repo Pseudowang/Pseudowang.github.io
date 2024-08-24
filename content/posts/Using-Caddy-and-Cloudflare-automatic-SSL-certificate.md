@@ -159,6 +159,10 @@ export CLOUDFLARE_API_TOKEN="your-api-token"
 如果你希望在每次登录时自动设置这个环境变量，可以将它添加到你的 shell 配置文件中，比如 `.bashrc` 或 `.bash_profile`
 
 ### 运行
+
+在`/etc/caddy/`文件夹下执行`./caddy run` 启动(如果有报错大概率是端口冲突，前面有解决方法)。
+
+
 在 Cloudflare 中添加好记录，就可以尝试访问了
 ![image.png](https://wangzhrbuckets.s3.bitiful.net/picture/2024/07/e126e7f44f905598709b689be833cb88.png)
 访问成功！！
