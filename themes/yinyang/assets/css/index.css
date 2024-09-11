@@ -271,6 +271,14 @@ thead, t h, td, tr {
   font-weight: 800;
 }
 
+body .post-comments {
+  max-height: 399px;
+  overflow-y: auto;
+  border: 0px solid #ddd;
+  padding: 9px;
+  background-color: #f8f9f9;
+}
+
 /* disqus */
 
 #disqus_thread {

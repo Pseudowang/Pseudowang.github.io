@@ -54,10 +54,16 @@
             </div>
           </div>
 
+
           {{ partial "related.html" . }}
 
           {{ if .Site.Params.postAds }}
           <div class="post-ads">{{ .Site.Params.postAds | safeHTML }}</div>
+          {{ end }}
+          {{ if .Site.Params.cusdis }}
+          <div class="post-comments">
+            {{ partial "cusdis.html" . }}
+          </div>
           {{ end }}
           <!-- split -->
           <div style="height: 50px;"></div>
@@ -66,6 +72,7 @@
             {{ partial "disqus.html" . }}
           </div>
           {{ end }}
+
         {{ end }}
 
         {{ partial "footer.html" . }}
@@ -77,12 +84,6 @@
   {{ if .Site.Params.extraBody }}
   {{ .Site.Params.extraBody | safeHTML }}
   {{ end }}
-  <h3>Comments:</h4>
-  <div id="cusdis_thread" data-host="https://comment.wangzhr.top"
-    data-app-id="1211d1b9-4d3a-477c-a7a9-fe8071df112a"
-    data-page-id="{{ .File.UniqueID }}" data-page-url="{{ .Permalink }}"
-    data-page-title="{{ .Title }}"></div>
-  <script async defer src="https://comment.wangzhr.top/js/cusdis.es.js"></script>
 
 </body>
 
