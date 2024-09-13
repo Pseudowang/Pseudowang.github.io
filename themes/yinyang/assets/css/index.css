@@ -271,8 +271,8 @@ thead, t h, td, tr {
   font-weight: 800;
 }
 
-body .post-comments {
-  max-height: 399px;
+.post-comments {
+  max-height: none ;
   overflow-y: auto;
   border: 0px solid #ddd;
   padding: 9px;
