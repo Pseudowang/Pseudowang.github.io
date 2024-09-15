@@ -45,6 +45,11 @@
               </a>
             </div>
             {{ end }}
+          {{ if .Site.Params.cusdis }}
+          <div class="post-comments">
+            {{ partial "cusdis.html" . }}
+          </div>
+          {{ end }}
           </div>
         </div>
         {{ if in .Site.Params.mainSections .Type }}
@@ -60,11 +65,7 @@
           {{ if .Site.Params.postAds }}
           <div class="post-ads">{{ .Site.Params.postAds | safeHTML }}</div>
           {{ end }}
-          {{ if .Site.Params.cusdis }}
-          <div class="post-comments">
-            {{ partial "cusdis.html" . }}
-          </div>
-          {{ end }}
+          
           <!-- split -->
           <div style="height: 50px;"></div>
           {{ if .Site.Params.disqus }}
