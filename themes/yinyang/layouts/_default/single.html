@@ -45,6 +45,7 @@
               </a>
             </div>
             {{ end }}
+
           </div>
         </div>
         {{ if in .Site.Params.mainSections .Type }}
@@ -53,12 +54,16 @@
               {{ .Site.Params.postFooterContent | safeHTML }}
             </div>
           </div>
-
           {{ partial "related.html" . }}
-
+          {{ if .Site.Params.cusdis }}
+          <div class="post-comments">
+            {{ partial "cusdis.html" . }}
+          </div>
+          {{ end }}
           {{ if .Site.Params.postAds }}
           <div class="post-ads">{{ .Site.Params.postAds | safeHTML }}</div>
           {{ end }}
+          
           <!-- split -->
           <div style="height: 50px;"></div>
           {{ if .Site.Params.disqus }}
@@ -66,6 +71,7 @@
             {{ partial "disqus.html" . }}
           </div>
           {{ end }}
+
         {{ end }}
 
         {{ partial "footer.html" . }}

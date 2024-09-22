@@ -271,6 +271,14 @@ thead, t h, td, tr {
   font-weight: 800;
 }
 
+.post-comments {
+  max-height: none ;
+  overflow-y: auto;
+  border: 0px solid #ddd;
+  padding: 9px;
+  background-color: #f8f9f9;
+}
+
 /* disqus */
 
 #disqus_thread {
@@ -286,6 +294,20 @@ thead, t h, td, tr {
   bottom: 0;
   background: white;
 }
+
+#cusdis_thread {
+  position: relative;
+}
+
+/* #cusdis_thread:after {
+  content: "";
+  display: block;
+  height: 55px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: white;
+} */
 
 @media screen and (max-width: 600px) {
   .header-title,

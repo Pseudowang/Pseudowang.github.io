@@ -25,8 +25,10 @@ DefaultContentLanguage = "cn"
 extraHead = ''
 favicon = "/images/avatar.png"
 name = "pseudowang"
-mainSections = ["posts", "daily", "notes" ]
+mainSections = ["posts", "daily", "notes"]
 description = "记录无用却有趣的事物"
+cusdis = true
+# disqus = 'pseudowang' 
 
 [[params.author]]
 name = "pseudowang"
