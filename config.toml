@@ -21,6 +21,7 @@ DefaultContentLanguage = "cn"
 #    weight = 1
 
 [params]
+rssFullContent = true
 # disqus = "joway" # disqus account name 
 extraHead = ''
 favicon = "/images/avatar.png"
