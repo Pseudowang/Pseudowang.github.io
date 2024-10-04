@@ -6,9 +6,15 @@ title = "Pseudowang"
 theme = "yinyang"
 DefaultContentLanguage = "cn"
 
+[outputFormats]
+  [outputFormats.RSS]
+    mediaType = "application/rss+xml"
+    baseName = "rss"  # 设置为 "rss" 以生成 rss.xml
+    isPlainText = false
+    isHTML = true
 
-# [outputs]
-#   home = ["HTML", "RSS", "JSON"]
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 # [languages]
 #  [languages.en]
@@ -37,7 +43,7 @@ homepage = "https://wangzhr.top/about"
 
 [[params.socials]]
 name = "RSS"
-link = "/index.xml"
+link = "/rss.xml"
 
 [[params.socials]]
 name = "About"
