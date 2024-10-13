@@ -55,7 +55,7 @@ services:
 下面我们点击上方的 Embed Code，复制弹窗中的代码。这部份代码需要根据你所用的博客网站类型不同进行部分修改，具体可参考[官方文档](https://cusdis.com/doc#/) 的 Integration 模块进行配置。
 
 我所用的是 `Hugo`， 配置如下
-```
+```html
   <h3>Comments:</h4>
   <div id="cusdis_thread" data-host="https://xxx"
     data-app-id="xxx"
@@ -73,7 +73,7 @@ services:
 
 [官方文档](https://cusdis.com/doc#/features/notification)中有进行介绍，我这里使用的是 **Gmail** 方案，首先，访问  [Google Account Security](https://myaccount.google.com/security)。然后确定你已经开启了 Two-factor Authentication。然后去 [application passwords](https://myaccount.google.com/apppasswords) 创建一个属于 Cusdis 的密码。
 
-```
+```shell
 SMTP_HOST=smtp.gmail.com 
 SMTP_PORT=465 
 SMTP_SECURE=true 
