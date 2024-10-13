@@ -85,6 +85,18 @@ SMTP_SENDER=your gmail email
 
 > The sender email MUST be the same as login user, but you can give it a display name by `John Doe <john.doe@gmail.com>`, the same applies for other SMTP services.
 
+然后在 Settings --> Notification 打开 Enable new comment notification
+![image.png](https://wangzhrbuckets.s3.bitiful.net/picture/2024/10/ad5a615e07c78ae21810ea2b5f5a06ed.png)
+
+在网站中的 Preferences 确定下 `Email Notificatioin` 是否打开
+![image.png](https://wangzhrbuckets.s3.bitiful.net/picture/2024/10/4725b3b80c1f154a95406b4a0f4577c3.png)
+
+然后在 Settings 中就可以输入你想被通知的邮箱啦！
+![image.png](https://wangzhrbuckets.s3.bitiful.net/picture/2024/10/218566be5968c9050549a6172936b720.png)
+
+也可以使用 [Follow](https://follow.is/) 的 Inbox 功能啦
+
+
 ### 总结
 以上就是我为我的网站添加 Cusdis 评论系统的全过程。如果遇到什么问题，欢迎留下你的评论，或者给我发邮件哦 :)
 
