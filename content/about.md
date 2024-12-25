@@ -22,3 +22,6 @@ draft = false
 
 
 我的邮箱: pseudowang@outlook.com (期待您的来信)
+
+
+[thepseudowang.com](https://thepseudowang.com) 和 [wangzhr.top](https://wangzhr.top) 都是我的博客网址
