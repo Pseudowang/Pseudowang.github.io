@@ -3,6 +3,26 @@
 {{ partial "head.html" . }}
 
 <body>
+  <!-- 添加动态大纲侧边栏，绝对定位在页面左侧 -->
+  {{ if in .Site.Params.mainSections .Type }}
+  <div class="dynamic-outline-fixed" id="dynamic-outline">
+    <div class="outline-header">
+      <h3>目录</h3>
+    </div>
+    <div class="outline-content" id="outline-content">
+      <!-- 大纲内容会通过JavaScript动态生成 -->
+    </div>
+    <div class="outline-footer">
+      <div class="reading-progress" id="reading-progress">
+        <span>0%</span>
+      </div>
+      <div class="back-top-button" id="back-top-button">
+        <span>Back Top</span>
+      </div>
+    </div>
+  </div>
+  {{ end }}
+
   <article class="post {{ .Site.Language.LanguageName }}" id="article">
     <div class="row">
       <div class="col-xs-12">
@@ -78,6 +98,110 @@
       </div>
     </div>
   </article>
+
+  <!-- 添加动态大纲JavaScript -->
+  {{ if in .Site.Params.mainSections .Type }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 获取文章内容元素
+      const article = document.querySelector('.post-content');
+      const outlineContent = document.getElementById('outline-content');
+      const dynamicOutline = document.getElementById('dynamic-outline');
+      const readingProgress = document.getElementById('reading-progress');
+      const backTopButton = document.getElementById('back-top-button');
+      
+      if (!article || !outlineContent) return;
+      
+      // 获取所有标题元素
+      const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      
+      if (headings.length === 0) {
+        dynamicOutline.style.display = 'none';
+        return;
+      }
+      
+      // 创建大纲列表
+      const outlineList = document.createElement('ul');
+      outlineList.className = 'outline-list';
+      
+      // 为每个标题创建列表项
+      headings.forEach((heading, index) => {
+        // 为每个标题添加ID以便于锚点跳转
+        const headingId = `heading-${index}`;
+        heading.id = headingId;
+        
+        const level = parseInt(heading.tagName.substring(1));
+        const listItem = document.createElement('li');
+        listItem.className = `outline-item level-${level}`;
+        
+        const link = document.createElement('a');
+        link.href = `#${headingId}`;
+        link.textContent = heading.textContent;
+        link.className = 'outline-link';
+        
+        // 点击事件
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById(headingId).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+        
+        listItem.appendChild(link);
+        outlineList.appendChild(listItem);
+      });
+      
+      outlineContent.appendChild(outlineList);
+      
+      // 添加滚动事件以高亮当前可见的标题
+      window.addEventListener('scroll', function() {
+        const scrollPosition = window.scrollY;
+        
+        // 找到当前可见的标题
+        let currentHeading = null;
+        
+        headings.forEach((heading) => {
+          const headingPosition = heading.offsetTop;
+          
+          if (headingPosition - 100 <= scrollPosition) {
+            currentHeading = heading;
+          }
+        });
+        
+        // 移除之前的高亮
+        const activeLinks = document.querySelectorAll('.outline-link.active');
+        activeLinks.forEach(link => link.classList.remove('active'));
+        
+        // 如果找到当前标题，高亮对应的导航项
+        if (currentHeading) {
+          const currentLink = document.querySelector(`.outline-link[href="#${currentHeading.id}"]`);
+          if (currentLink) {
+            currentLink.classList.add('active');
+          }
+        }
+        
+        // 计算阅读进度
+        const windowHeight = window.innerHeight;
+        const fullHeight = document.body.scrollHeight;
+        const scrolled = window.scrollY;
+        
+        const percentScrolled = Math.min(100, Math.round((scrolled / (fullHeight - windowHeight)) * 100));
+        readingProgress.innerHTML = `<span>${percentScrolled}%</span>`;
+      });
+      
+      // 返回顶部按钮点击事件
+      backTopButton.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // 初始触发一次滚动事件
+      window.dispatchEvent(new Event('scroll'));
+    });
+  </script>
+  {{ end }}
 
   {{ partial "scripts.html" . }}
   {{ if .Site.Params.extraBody }}
